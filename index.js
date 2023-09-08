@@ -1,22 +1,22 @@
-const express = require('express')
-var cors = require('cors')
-const screenShoter = require('./screenShoter')
+const express = require('express');
+var cors = require('cors');
+const screenShoter = require('./screenShoter');
 
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 
 app.get('/', (req, res) => {
-  res.send('Puppeteer')
-})
+  res.send('Puppeteer');
+});
 
 app.post('/screenshoter', (req, res) => {
-  screenShoter(req, res)
-})
+  screenShoter(req, res);
+});
 
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
-})
+  console.log(`listening on port ${PORT}`);
+});
