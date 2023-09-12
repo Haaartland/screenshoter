@@ -12,7 +12,7 @@ const screenShoter = async (req, res) => {
       args: [
         '--disable-setuid-sandbox',
         '--no-sandbox',
-        '--single-process',
+        // '--single-process',
         '--no-zygote',
       ],
       executablePath:
