@@ -8,12 +8,16 @@ const screenShoter = async (req, res) => {
 
   try {
     browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: [
-        '--disable-setuid-sandbox',
         '--no-sandbox',
-        // '--single-process',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
         '--no-zygote',
+        '--single-process',
+        '--disable-gpu',
       ],
       executablePath:
         process.env.NODE_ENV === 'production'
