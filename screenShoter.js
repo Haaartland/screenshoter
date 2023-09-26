@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer')
 require('dotenv').config()
 const screenShoter = async (req, res) => {
-  const { adId, type, baseUrl } = req.body
+  const { adId, type, baseUrl, styles } = req.body
+
   let browser = null
 
   let base64 = ''
@@ -29,10 +30,11 @@ const screenShoter = async (req, res) => {
 
     await page.setViewport({ width: 1440, height: 1080, deviceScaleFactor: 2 })
 
-    await page.goto(`${baseUrl}/deals/banners/${adId}?type=${type}`)
+    const stylesParams = new URLSearchParams(styles)
 
-    // const readMoreBtn = await page.waitForSelector('.btn-read-more')
-    // await readMoreBtn.evaluate((el) => el.remove())
+    const url = `${baseUrl}/deals/banners/${adId}?type=${type}&${stylesParams}`
+
+    await page.goto(url)
 
     const element = await page.$(`.ad--${type}`)
 
