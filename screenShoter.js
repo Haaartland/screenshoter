@@ -34,7 +34,9 @@ const screenShoter = async (req, res) => {
 
     const url = `${baseUrl}/deals/banners/${adId}?type=${type}&${stylesParams}`
 
-    await page.goto(url)
+    await page.goto(url, {
+      waitUntil: 'networkidle0',
+    })
 
     const element = await page.$(`.ad--${type}`)
 
