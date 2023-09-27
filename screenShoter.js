@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer')
 require('dotenv').config()
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 const screenShoter = async (req, res) => {
   const { adId, type, baseUrl, styles } = req.body
 
@@ -28,17 +31,19 @@ const screenShoter = async (req, res) => {
 
     const page = await browser.newPage()
 
-    await page.setViewport({ width: 1440, height: 1080, deviceScaleFactor: 2 })
+    await page.setViewport({ width: 728, height: 1200, deviceScaleFactor: 2 })
 
     const stylesParams = new URLSearchParams(styles)
 
     const url = `${baseUrl}/deals/banners/${adId}?type=${type}&${stylesParams}`
 
     await page.goto(url, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'domcontentloaded',
     })
 
-    const element = await page.$(`.ad--${type}`)
+    const element = await page.waitForSelector(`.ad--${type}`)
+
+    await sleep(2000)
 
     base64 = await element.screenshot({ encoding: 'base64' })
   } catch (err) {
