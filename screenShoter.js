@@ -4,7 +4,7 @@ require('dotenv').config()
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const screenShoter = async (req, res) => {
-  const { adId, type, baseUrl, styles } = req.body
+  const { adId, type, baseUrl, styles, content } = req.body
 
   let browser = null
 
@@ -34,8 +34,9 @@ const screenShoter = async (req, res) => {
     await page.setViewport({ width: 728, height: 1200, deviceScaleFactor: 2 })
 
     const stylesParams = new URLSearchParams(styles)
+    const contentParams = new URLSearchParams(content)
 
-    const url = `${baseUrl}/deals/banners/${adId}?type=${type}&${stylesParams}`
+    const url = `${baseUrl}/deals/banners/${adId}?type=${type}&${stylesParams}&${contentParams}&context=screenshot`
 
     await page.goto(url, {
       waitUntil: 'domcontentloaded',
